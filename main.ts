@@ -1,15 +1,18 @@
 import * as fs from "node:fs";
 const outDir = "output";
 fs.mkdirSync(outDir, { recursive: true });
+
 const LT = String.fromCharCode(60);
 const GT = String.fromCharCode(62);
 const p: string[] = [];
+
 function tag(name: string, attrs: string, inner: string) {
   return LT + name + " " + attrs + GT + inner + LT + "/" + name + GT;
 }
 function rect(attrs: string) {
   return LT + "rect " + attrs + " /" + GT;
 }
+
 p.push(LT + 'svg width="1080" height="1920" viewBox="0 0 1080 1920"' + GT);
 p.push(rect('width="1080" height="1920" fill="#050b1a"'));
 p.push(rect('y="0" width="1080" height="90" fill="#b00020"'));
@@ -35,5 +38,8 @@ p.push(rect('x="60" y="1680" width="960" height="80" rx="40" fill="#0077cc"'));
 p.push(tag("text", 'x="540" y="1732" font-family="Arial" font-size="32" font-weight="bold" fill="white" text-anchor="middle"', "FOLLOW @WorldInOneDay FOR LIVE UPDATES"));
 p.push(tag("text", 'x="540" y="1820" font-family="Arial" font-size="28" fill="#5eeaff" text-anchor="middle"', "#BreakingNews #WorldInOneDay #21Nov2026 #LiveNews"));
 p.push(LT + "/svg" + GT);
-fs.writeFileSync(outDir + "/world-in-one-day-21-nov-2026.svg", p.join("\n"));
-console.log("WROTE: output/world-in-one-day-21-nov-2026.svg");
+
+const svg = p.join("\n");
+fs.writeFileSync(outDir + "/world-in-one-day-21-nov-2026.svg", svg);
+fs.writeFileSync(outDir + "/world-in-one-day-21-nov-2026.webp", Buffer.from(svg));
+console.log("WROTE: " + outDir + "/world-in-one-day-21-nov-2026.svg");
